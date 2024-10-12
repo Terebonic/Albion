@@ -1,3 +1,7 @@
+Перед началом работы вам необходимо установить необходимые зависимости , команда "pip install -r requeriments.txt"  и иметь уже установленный python3
+
+Before you start, you need to install the necessary dependencies, the command "pip install -r requeriments.txt " and have python3 already installed
+
 INFO albion810 seller for 1920x810(resolution)
 
 INFO albion1080 seller for 1920x1080(resolution)
