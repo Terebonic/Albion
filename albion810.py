@@ -1,7 +1,6 @@
 import pyautogui
 import time
 import pygetwindow as gw
-import argparse
 
 
 precoordinations = [
@@ -18,36 +17,43 @@ coordinates = [
 ]
 
 
-def seller(itemscount):
+def prescneshotpositions():
+    screenshotxy = [
+        (1357, 428),
+    ]
+    for x, y in screenshotxy:
+        pyautogui.click(x, y)
+    screenshot = pyautogui.screenshot(region=(1210, 430, 90, 25))
+    screenshot.save("reference_image.png")
+
+
+def seller():
     game_window_title = "Albion Online Client"
     game_window = gw.getWindowsWithTitle(game_window_title)
 
     if game_window:
         game_window[0].activate()
-        print(f"Окно игры '{game_window_title}' активировано.")
+        prescneshotpositions()
 
         for x, y in precoordinations:
             pyautogui.click(x, y)
             time.sleep(0.03)
 
-        for i in range(0, itemscount):
-            for x, y in coordinates:
-                pyautogui.click(x, y)
-                time.sleep(0.03)
+        while True:
+            try:
+                location = pyautogui.locateOnScreen(
+                    'reference_image.png', confidence=0.8)
+
+                for x, y in coordinates:
+                    pyautogui.click(x, y)
+                    time.sleep(0.03)
+
+            except pyautogui.ImageNotFoundException:
+                break
+
     else:
         print(f"Окно игры '{game_window_title}' не найдено.")
 
 
-def cmdparser():
-    parser = argparse.ArgumentParser(description="Albion online fast seller")
-
-    parser.add_argument(
-        'itemscount', type=int, help='Count of all your items in inventory')
-
-    args = parser.parse_args()
-
-    seller(args.itemscount)
-
-
 if __name__ == "__main__":
-    cmdparser()
+    seller()
